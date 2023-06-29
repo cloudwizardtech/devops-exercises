@@ -1,0 +1,51 @@
+1. Pe orice resursa creata de pus tag - nunme: VPC, SG...
+				      - owner: Florin
+				      
+2. Creez un nou VPC cu CIDR diferit de cel default:
+	- 2 subnet uri publice
+			- primul cu 1024 host uri
+			- al doilea cu 500 host uri
+	- 2 subnet uri private
+		 	- primul cu 1000 host uri
+			- al doilea cu 200 host uri
+	- 1 subnet public si 1 subnet privat in un availability zone si 1 subnet public si 1 subnet privat in alt az
+	- Legat VPC default de VPC nou ( o instanta sa poata accesa alta instanta din alt VPC ) - Peering connections
+
+3. Creat o instanta pe care se instaleaza Jenkins ca si serviciu. Dupa ce se este totul setat; se creeaza un AMI din instanta	
+	- se instaleaza Jenkins, aws cli, curl/wget
+	
+4. Delegat zona DNS florin@itcrew.rocks florin.thedevops.school
+
+5. Folosit AMI cu Jenkins la Launch Template pentru un Auto Scaling group
+	- Security Group care permite ssh + http doar de la birou
+	- Load Balancer cu certificat in ACM pe baza domeniului delegat mai sus
+
+6. Copiat instanta de Jenkins in alt cont/regiune si pornit instanta din acea copie
+
+7. Un	- ALB public in toate AZ disponibile
+    	- ASG private cu NGINX care foloseste un index.html care sa iti spuna - ce AZ este
+    					         			      - ce IP privat si public are
+ 	- index.html-ul se copiaza de pe un S3 bucket la momentul lansarii instantei (launch time)
+ 		- S3-ul va fi privat; fisierele nu pot fi accesate in mod public.
+ 		- permisiunile AWS nu vor fi date prin access si secret key 
+
+8. Un Jenkins in ECS care sa actualizeze ASG
+	1. schimbe numarul minim si maxim de instante
+		- manual - aws ecs exec 
+		   - aws autoscaling update-auto-scaling - schimb AMI din launch template a ASG
+		- pipeline - instalez aws cli
+		   - aws autoscaling update-auto-scaling - schimb AMI din launch template a ASG
+	2. cu un AMI nou
+		- pipeline - instalez aws cli
+		   - aws autoscaling update-auto-scaling - schimb AMI din launch template a ASG
+	    					         
+9. Creat totul de mai sus cu CloudFormation cu YAML ( facut capitol YAML https://kodekloud.com/courses/kubernetes-for-the-absolute-beginners-hands-on/)
+	- vor fi mai multe stack-uri:
+		- VPC
+		- ECS
+		- ASG
+10. Creat totul de mai sus cu Terraform
+	- vor fi mai multe module:
+		- VPC
+		- ECS
+		- ASG				         
