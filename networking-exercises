@@ -1,7 +1,6 @@
 Networking exercises
 
 
-
 Create a network for the subnet: 10.0.0.0/8
 
 The network has 6 locations:
@@ -17,8 +16,7 @@ For every location find:
 - broadcast address
 - number of usable IPs
 - range of usable IPs
-- network address
-- host address
+
 
 -------------
 
@@ -38,8 +36,7 @@ For every location find:
 - broadcast address
 - number of usable IPs
 - range of usable IPs
-- network address
-- host address
+
 
 
 --------------------
@@ -64,7 +61,7 @@ a)
 - 1 with 5 with 192.168.0.0/30
 
 b)
-- With the exception of the first network all networks will be configured with DACP  
+- With the exception of the first network all networks will be configured with DHCP  
 
 c)
 - Configure the routing tables for every router in the network such that every network can communicate with all networks (for extra points make so that network 2 can not communicate with network 5 on a routing level)
