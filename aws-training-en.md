@@ -13,7 +13,10 @@
     - Create a Peering connection between the default VPC and the new VPC - so a instance in the default VPC can connect to a instance in the other new VPC
 
 3. Create a EC2 instance:
-    - install Jenkins, aws cli, curl/wget
+    - install Jenkins, aws cli, curl/wget:
+        - manually: 
+            - ssh to EC2 instance 
+            - in User Data section when you launch EC2 instance
     - after the setup is complete create a AMI of that instance
 
 4. Host DNS zone in AWS in Route 53. If needed a domain/subdomain will be provided by us:
@@ -50,6 +53,9 @@
 9. Build all the above using CloudFormation using YAML (take the YAML course - https://kodekloud.com/courses/kubernetes-for-the-absolute-beginners-hands-on/)
     - there will be more stacks:
       - VPC
+      - EC2:
+          - use cfn-init to preinstall/enable packages
+          - use cfn-signal to check if packages were installed successfully
       - ECS
       - ASG
 
